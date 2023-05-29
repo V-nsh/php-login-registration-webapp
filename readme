@@ -1,0 +1,6 @@
+Download codeigniter:
+    Open [xampp_folder_path]/php/php.ini to edit.
+    Search for ;extension=intl and remove the ;.
+    Save the php.ini file and restart Apache.
+
+    before deploying use this: > composer install --no-dev

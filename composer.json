@@ -1,0 +1,12 @@
+{
+    "require": {
+        "codeigniter4/framework": "^4.3",
+        "grpc/grpc": "^1.38",
+        "google/protobuf": "^3.17"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.28"
+        }
+    }
+}
