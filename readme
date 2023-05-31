@@ -1,6 +1,14 @@
+Composer and other requirements:
+    Refer to PratishthaWeb readme for setup.
+
 Download codeigniter:
     Open [xampp_folder_path]/php/php.ini to edit.
     Search for ;extension=intl and remove the ;.
     Save the php.ini file and restart Apache.
 
     before deploying use this: > composer install --no-dev
+
+Inital configuration:
+    *From the \vendor folder copy and paste app, public, tests and writable folders to the root directory
+    *In the \app\Config\Paths.php search for $systemDirectory and change the path to something like '\..\..\vendor\codeigniter4\framework\system'
+    *In \app\Config\Database.php you can setup your database by changing the $default array.
