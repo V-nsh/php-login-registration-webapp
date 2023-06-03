@@ -219,6 +219,7 @@
     </div>
 
     <div class="heroe">
+        <?= session()->getFlashdata('success') ?>
 
         <h1>Welcome to CodeIgniter <?= CodeIgniter\CodeIgniter::CI_VERSION ?></h1>
 

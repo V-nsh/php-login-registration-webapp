@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use App\Controllers\Home;
+use App\Controllers\Users;
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -29,7 +31,15 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+$routes->match(['get', 'post'], 'user/register', [Users::class, 'create']);
 $routes->get('/', 'Home::index');
+// TODO : CHANGE THE HOME PAGE WHEN USER IS LOGGED OUT
+$routes->get('home', [Home::class, 'index']);
+$routes->get('(:segment)', [Home::class, 'view']);
+$routes->get('user/(:segment)', [Users::class, 'view']);
+// post requests
+// $routes->match(['get', 'post'], 'user/register', [Users::class, 'create']);
+// $routes->get('user/register', [Users::class, 'create']);
 
 /*
  * --------------------------------------------------------------------
