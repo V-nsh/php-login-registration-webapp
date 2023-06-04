@@ -8,8 +8,11 @@
     <title><?= esc($title) ?></title>
 </head>
 <body class="container">
-    <h1><?= esc($user->name) ?></h1>
-    <h3>email: <?= esc($user->email) ?></h3>
-    <h3>id: <?= esc($user->id) ?></h3>
+        <h1><?= esc($user->name) ?></h1>
+        <h3>email: <?= esc($user->email) ?></h3>
+        <h3>id: <?= esc($user->id) ?></h3>
+        <a href="<?= esc(base_url('user/edit')) ?>">
+            <button>Edit</button>
+        </a>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php 
 namespace App\Controllers;
-
+use Config\App;
 use App\Models\UsersModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
@@ -58,6 +58,81 @@ class Users extends BaseController {
         ]);
 
         return redirect()->to('/')->with('success', 'Successfully registered!');
+    }
+
+    public function signinIndex() {
+        helper('form');
+        $baseURL = config('App')->baseURL;
+        $data['baseURL'] = $baseURL;
+        if (! $this->request->is('post')) {
+            return view('templates/header', ['title' => 'Sign in here!'])
+                . view('users/signin', $data)
+                . view('templates/footer');
+        }
+    }
+
+    public function loginAuth() {
+        $session = session();
+        $model = new UsersModel();
+        $email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
+        $data = $model->where('email', $email)->first();
+        if ($data) {
+            $pass = $data['password'];
+            if(password_verify($password, $pass)) {
+                $ses_data = [
+                    'id' => $data['id'],
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'isLoggedIn' => true,
+                ];
+                $session->set($ses_data);
+                return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully logged in!');
+            } else {
+                return redirect()->to('/user/signin')->withInput('error', 'Email or Password is incorrect!');
+            }
+        } else{
+            return redirect()->to('/user/signin')->withInput('error', 'Email does not exist!');
+        }
+    }
+
+    public function editIndex() {
+        helper('form');
+        $session = session();
+        $data['name'] = $session->get('name');
+        $data['email'] = $session->get('email');
+        if (! $this->request->is('post')) {
+            return view('templates/header', ['title' => 'Edit Profile'])
+                . view('users/edit', $data)
+                . view('templates/footer');
+        }
+    }
+
+    public function editAuth() {
+        helper('form');
+        $session = session();
+        $model = new UsersModel();
+        $id = $session->get('id');
+        $name = $this->request->getVar('name');
+        $email = $this->request->getVar('email');
+        $data = $model->where('id', $id)->first();
+        if ($data) {
+            $model->update($id, [
+                'name' => $name,
+                'email' => $email,
+            ]);
+            $ses_data = [
+                'id' => $data['id'],
+                'name' => $name,
+                'email' => $email,
+                'isLoggedIn' => true,
+            ];
+            $session->set($ses_data);
+            $session->session_cache_expire = '60'; 
+            return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully edited profile!');
+        } else{
+            return redirect()->to('/user/edit')->withInput('error', 'Something went wrong!');
+        }
     }
 }
 ?>

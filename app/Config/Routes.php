@@ -32,9 +32,13 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->match(['get', 'post'], 'user/register', [Users::class, 'create']);
+$routes->match(['get', 'post'], 'user/loginAuth', [Users::class, 'loginAuth']);
+$routes->match(['get', 'post'], 'user/editProfile', [Users::class, 'editAuth']);
 $routes->get('/', 'Home::index');
 // TODO : CHANGE THE HOME PAGE WHEN USER IS LOGGED OUT
 $routes->get('home', [Home::class, 'index']);
+$routes->get('user/signin', [Users::class, 'signinIndex']);
+$routes->get('user/edit', [Users::class, 'editIndex']);
 $routes->get('(:segment)', [Home::class, 'view']);
 $routes->get('user/(:segment)', [Users::class, 'view']);
 // post requests
