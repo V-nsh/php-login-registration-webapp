@@ -9,3 +9,17 @@ Inital configuration:
     *From the \vendor folder copy and paste app, public, tests and writable folders to the root directory
     *In the \app\Config\Paths.php search for $systemDirectory and change the path to something like '\..\..\vendor\codeigniter4\framework\system'
     *In \app\Config\Database.php you can setup your database by changing the $default array.
+    
+Database configuration:
+   database name: aptcoder
+   database user: root
+   table name: interns
+   table description: 
+      +----------+--------------+------+-----+---------+----------------+
+      | Field    | Type         | Null | Key | Default | Extra          |
+      +----------+--------------+------+-----+---------+----------------+
+      | id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+      | name     | varchar(255) | YES  |     | NULL    |                |
+      | email    | varchar(255) | YES  |     | NULL    |                |
+      | password | varchar(255) | YES  |     | NULL    |                |
+      +----------+--------------+------+-----+---------+----------------+
