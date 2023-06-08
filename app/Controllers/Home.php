@@ -7,6 +7,7 @@ class Home extends BaseController
 {
     public function index()
     {
+        session()->destroy();
         return view('welcome_message');
     }
 

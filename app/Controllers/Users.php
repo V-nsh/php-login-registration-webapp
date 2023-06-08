@@ -15,10 +15,16 @@ class Users extends BaseController {
 
     public function view($id=null) {
         $model = new UsersModel();
-        $data = [
-            'user' => $model->getUser($id)->getRow(),
-            'title' => 'User Profile',
-        ];
+        $session = session();
+        if ($session->get('isLoggedIn')) {
+            $data = [
+                'user' => $model->getUser($id)->getRow(),
+                'title' => 'User Profile',
+            ];
+            d($session->get('isLoggedIn'));
+        } else {
+            return redirect()->to('/user/signin')->with('error', 'Please sign in first!');
+        }
 
         if (empty($data['user'])) {
             throw new PageNotFoundException('Cannot find the user with id: ' . $id);
@@ -89,22 +95,26 @@ class Users extends BaseController {
                 $session->set($ses_data);
                 return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully logged in!');
             } else {
-                return redirect()->to('/user/signin')->withInput('error', 'Email or Password is incorrect!');
+                return redirect()->to('/user/signin')->with('error', 'Email or Password is incorrect!');
             }
         } else{
-            return redirect()->to('/user/signin')->withInput('error', 'Email does not exist!');
+            return redirect()->to('/user/signin')->with('error', 'Email does not exist!');
         }
     }
 
     public function editIndex() {
         helper('form');
         $session = session();
-        $data['name'] = $session->get('name');
-        $data['email'] = $session->get('email');
-        if (! $this->request->is('post')) {
-            return view('templates/header', ['title' => 'Edit Profile'])
-                . view('users/edit', $data)
-                . view('templates/footer');
+        if ($session->get('isLoggedIn')) {
+            $data['name'] = $session->get('name');
+            $data['email'] = $session->get('email');
+            if (! $this->request->is('post')) {
+                return view('templates/header', ['title' => 'Edit Profile'])
+                    . view('users/edit', $data)
+                    . view('templates/footer');
+            }
+        } else {
+            return redirect()->to('/user/signin')->with('error', 'Please sign in first!');
         }
     }
 
@@ -117,21 +127,48 @@ class Users extends BaseController {
         $email = $this->request->getVar('email');
         $data = $model->where('id', $id)->first();
         if ($data) {
-            $model->update($id, [
-                'name' => $name,
-                'email' => $email,
-            ]);
-            $ses_data = [
-                'id' => $data['id'],
-                'name' => $name,
-                'email' => $email,
-                'isLoggedIn' => true,
-            ];
-            $session->set($ses_data);
-            $session->session_cache_expire = '60'; 
-            return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully edited profile!');
+            $password = $this->request->getVar('password');
+            $pass = $data['password'];
+            if(password_verify($password, $pass)) {
+                $model->update($id, [
+                    'name' => $name,
+                    'email' => $email,
+                ]);
+                $ses_data = [
+                    'id' => $data['id'],
+                    'name' => $name,
+                    'email' => $email,
+                    'isLoggedIn' => true,
+                ];
+                $session->set($ses_data);
+                $session->session_cache_expire = '300'; 
+                return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully edited profile!');
+            } else {
+                session()->remove('isLoggedIn');
+                return redirect()->to('/user//' . $data['id'])->with('error', 'Password is incorrect!');
+            }
         } else{
-            return redirect()->to('/user/edit')->withInput('error', 'Something went wrong!');
+            session()->remove('isLoggedIn');
+            return redirect()->to('/user/edit')->with('error', 'Something went wrong!');
+        }
+    }
+
+    public function deleteAuth() {
+        $session = session();
+        if ($session->get('isLoggedIn')) {
+            $model = new UsersModel();
+            $id = $session->get('id');
+            $data = $model->where('id', $id)->first();
+            if ($data) {
+                $model->delete($id);
+                session()->destroy();
+                return redirect()->to('/')->with('success', 'Successfully deleted profile!');
+            } else{
+                session()->remove('isLoggedIn');
+                return redirect()->to('/user/edit')->with('error', 'Something went wrong!');
+            }
+        } else {
+            return redirect()->to('/user/signin')->with('error', 'Please sign in first!');
         }
     }
 }

@@ -34,11 +34,13 @@ $routes->set404Override();
 $routes->match(['get', 'post'], 'user/register', [Users::class, 'create']);
 $routes->match(['get', 'post'], 'user/loginAuth', [Users::class, 'loginAuth']);
 $routes->match(['get', 'post'], 'user/editProfile', [Users::class, 'editAuth']);
+$routes->match(['get', 'delete'],'user/delete', [Users::class, 'deleteAuth']);
 $routes->get('/', 'Home::index');
 // TODO : CHANGE THE HOME PAGE WHEN USER IS LOGGED OUT
 $routes->get('home', [Home::class, 'index']);
 $routes->get('user/signin', [Users::class, 'signinIndex']);
 $routes->get('user/edit', [Users::class, 'editIndex']);
+// $routes->delete('user/delete', [Users::class, 'deleteAuth']);
 $routes->get('(:segment)', [Home::class, 'view']);
 $routes->get('user/(:segment)', [Users::class, 'view']);
 // post requests

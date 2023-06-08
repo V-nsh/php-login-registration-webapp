@@ -16,6 +16,9 @@
             <label for="email">Email</label>
             <input type="email" name="email" value="<?= esc($email) ?>">
 
+            <label for="password">Please verify your password:</label>
+            <input type="password" name="password" value="">
+
             <button type="submit">Save</button>
         </form>
 </body>

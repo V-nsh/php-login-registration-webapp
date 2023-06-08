@@ -1,1 +1,0 @@
-__ci_last_regenerate|i:1685865111;_ci_previous_url|s:43:"http://localhost:8080/index.php/user/signin";id|s:1:"4";name|s:6:"blabla";email|s:16:"blabla@gmail.com";isLoggedIn|b:1;_ci_old_input|a:2:{s:3:"get";a:0:{}s:4:"post";a:3:{s:5:"email";s:16:"blabla@gmail.com";s:8:"password";s:4:"dasf";s:6:"submit";s:0:"";}}__ci_vars|a:1:{s:13:"_ci_old_input";s:3:"old";}
