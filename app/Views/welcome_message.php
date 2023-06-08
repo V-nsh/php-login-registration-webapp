@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Welcome to Aptcoder home page!</title>
-    <link rel="stylesheet" href="<?php echo base_url('css/common.css'); ?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/home.css'); ?>">
 </head>
 <body>
     <header>

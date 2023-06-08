@@ -1,5 +1,76 @@
-Composer and other requirements:
-    Refer to PratishthaWeb readme for setup.
+# Installation
+
+Note: If you already have XAMPP, composer, grpc, xdebug and codeigniter installed then you can skip the steps related to them.
+- Setup XAMPP :-
+   1. Download XAMPP from "https://www.apachefriends.org/download.html"
+   2. Let's say you downloaded XAMPP with version "8.1.12 / PHP 8.1.12"
+   3. Install XAMPP in "C" Drive.
+
+- Setup Project :-
+   1. Clone the project from GitHub "https://github.com/pratishthawebapp/pratishthaweb".
+   2. Choose your destination folder as "C:\xampp\htdocs".
+
+- Setup Composer :-
+   1. Download 'composer' from "https://getcomposer.org/download/"
+   2. Let's say you are a windows user. You need to click on "Composer-Setup.exe" which is written in the line
+   'Download and run Composer-Setup.exe - it will install the latest composer version whenever it is executed.'
+   3. Open Project using 'VS Code' code editor.
+   4. Open terminal. Select 'command prompt' from the dropdown button.
+   5. Type the command "composer".
+   6. Then type the command "composer update".
+   7. Then type the command "composer install". 
+
+- Checking "PHP Version" and "Thread Safety" :-
+   1. Run the XAMPP. Click on "Admin" button on the 'Apache' module.
+   2. Click on "PHPInfo" on the navbar.
+   3. At the top, you can see the PHP Version. If you have downloaded XAMPP with version "8.1.12 / PHP 8.1.12" then it
+   will show the same version.
+   4. Press "Ctrl + F" to search for "Thread Safety". Check, if it is "enabled" or not.
+
+- Setup "gRPC" file :-
+   1. Go to "https://pecl.php.net/package/grpc". 
+   2. It might take a couple of minutes to load this website. Be patient.
+   3. After the website loads, you will see "Downloads" column. In this column check for the latest grpc version in which 
+   the name will include Windows symbol followed by "DLL". Also make sure that the "State" is 'stable'.
+   4. Click on it.
+   5. Now, check your PHP version. In our case, it is "PHP 8.1.12" which means our PHP version is "8.1".
+   6. If your "Thread Safety" is "enabled" and your system is a 64 bit machine then select "8.1 Thread Safe (TS) x64". 
+   7. Your download will begin soon. Extract this zip folder. 
+   8. Copy "php_grpc.dll" file.
+   9. Paste it in the location "C:\xampp\php\ext\php_grpc.dll".
+   10. Open "php.ini" file from "C:\xampp\php\php.ini".
+   11. Press "Ctrl + F" to search for "shmop".
+   12. After you find "shmop", go to next line and type "extension=grpc".
+   13. This will enable grpc in your XAMPP.
+   14. Run the XAMPP. Click on "Admin" button on the 'Apache' module.
+   15. Click on "PHPInfo" on the navbar.
+   16. Press "Ctrl + F" to search for "grpc".
+   17. It will show "grpc support" as "enabled". This means your grpc setup is complete.
+
+- Enable Library :-
+   1. Press "Ctrl + F" to search for ";extension=sodium". 
+   2. Remove the "semi-colon". It will look like this "extension=sodium".
+
+- Setup Xdebug (Used for debugging) :-
+   1. Go to "https://xdebug.org/download#releases"
+   2. If you have PHP 8.1 and your Thread Safety is enabled and you have 64 bit Windows machine then click on
+   "PHP 8.1 VS16 TS (64 bit)" under the 'Windows binaries' section.
+   3. You can rename the file as "php_xdebug".
+   4. Copy this file and paste it in the location "C:\xampp\php\ext\php_xdebug.dll".
+   5. Now, open "php.ini" file from "C:\xampp\php\php.ini".
+   6. Press "Ctrl + F" to search for "zend_extension". 
+   7. After you find "zend_extension", go to next line and type "zend_extension=C:\xampp\php\ext\php_xdebug.dll".
+   8. At the end of this file, paste the below code :<br>
+   [XDebug]<br>
+   xdebug.mode=debug<br>
+   xdebug.start_with_request=yes<br>
+   xdebug.client_port=9000
+
+- XAMPP Blocked Ports Error :-<br>
+   A common source of error connected with Apache is blocked ports. If you’re using the standard setup, then XAMPP will assign the web server to main port 80 and the SSL port 443. The latter of these particularly is often blocked by other programs. In the example above, it’s likely that the Tomcat port is being blocked, meaning the web server can’t be started. There are three ways to solve this issue:
+   1. Change the conflicting port: Let’s assume for the sake of example that the instant messenger program Skype is blocking SSL port 443 (this is a common problem). One way to deal with this issue is to change Skype’s port settings. To do this, open the program and navigate via ‘Actions’, ‘Options’, and ‘Advanced’, until you reach the ‘Connections’ menu. You should find a box checked to allow Skype access to ports 80 and 443. Deselect this checkbox now.
+   2. Change the XAMPP module port settings: Click the Config button for the module in question and open the files httpd.conf and httpd-ssl.conf. Replace port number 80 in httpd.conf and port number 443 in httpd-ssl.conf with any free ports, before saving the file data. Now click on the general Config button on the right-hand side and select ‘Services and Ports Settings’. Customize the ports for the module server to reflect the changes in the conf files.
+   3. End the conflicting program: The simplest way to avoid port conflicts in the short term is to end the conflicting program (Skype in this case). If you restart Skype after your XAMPP module servers are already running, it will select a different port and your issue will be resolved.
 
 Download codeigniter:
     Open [xampp_folder_path]/php/php.ini to edit.

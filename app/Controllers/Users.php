@@ -21,7 +21,6 @@ class Users extends BaseController {
                 'user' => $model->getUser($id)->getRow(),
                 'title' => 'User Profile',
             ];
-            d($session->get('isLoggedIn'));
         } else {
             return redirect()->to('/user/signin')->with('error', 'Please sign in first!');
         }
