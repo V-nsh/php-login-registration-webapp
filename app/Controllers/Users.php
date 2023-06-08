@@ -53,6 +53,7 @@ class Users extends BaseController {
             'email' => 'required|valid_email|is_unique[interns.email]',
         ])) {
             return redirect()->back()->withInput();
+            // return redirect()->back()->withInput()->with('error', 'Email already exists');
         }
 
         $model = new UsersModel();
@@ -143,11 +144,11 @@ class Users extends BaseController {
                 $session->session_cache_expire = '300'; 
                 return redirect()->to('/user//' . $data['id'])->with('success', 'Successfully edited profile!');
             } else {
-                session()->remove('isLoggedIn');
+                // session()->remove('isLoggedIn');
                 return redirect()->to('/user//' . $data['id'])->with('error', 'Password is incorrect!');
             }
         } else{
-            session()->remove('isLoggedIn');
+            // session()->remove('isLoggedIn');
             return redirect()->to('/user/edit')->with('error', 'Something went wrong!');
         }
     }

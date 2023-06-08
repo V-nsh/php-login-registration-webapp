@@ -8,7 +8,9 @@
     <title>Register</title>
 </head>
 <body>
-    <?= session()->getFlashdata('error') ?>
+    <div class="error-message">
+        <?= session()->getFlashdata('error') ?>
+    </div>
     <?= validation_list_errors() ?>
 
     <div class="container">

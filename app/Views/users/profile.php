@@ -7,18 +7,23 @@
     <link rel="stylesheet" href="<?php echo base_url('css/profile.css'); ?>">
     <title><?= esc($title) ?></title>
 </head>
-<body class="container">
+<body>
+    <div class="container">
         <?= session()->getFlashdata('success') ?>
         <?= session()->getFlashdata('error') ?>
-        <h1><?= esc($user->name) ?></h1>
-        <a href="<?= esc(base_url('/')) ?>">Logout</a>
-        <h3>email: <?= esc($user->email) ?></h3>
-        <h3>id: <?= esc($user->id) ?></h3>
-        <a href="<?= esc(base_url('user/edit')) ?>">
-            <button>Edit</button>
-        </a>
-        <a href="<?= esc(base_url('user/delete')) ?>">
-            <button>Delete</button>
-        </a>
+
+        <div class="profile">
+            <h1><?= esc($user->name) ?></h1>
+            <a href="<?= esc(base_url('/')) ?>">Logout</a>
+            <h3>email: <?= esc($user->email) ?></h3>
+            <h3>id: <?= esc($user->id) ?></h3>
+            <a href="<?= esc(base_url('user/edit')) ?>">
+                <button>Edit</button>
+            </a>
+            <a href="<?= esc(base_url('user/delete')) ?>">
+                <button>Delete</button>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
