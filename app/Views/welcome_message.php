@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Welcome to Aptcoder home page!</title>
+    <title>Welcome to home page!</title>
     <link rel="stylesheet" href="<?php echo base_url('css/home.css'); ?>">
 </head>
 <body>
